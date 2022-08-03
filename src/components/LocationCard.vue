@@ -63,17 +63,20 @@
 </template>
 
 <style scoped lang="scss">
-
     .location-card {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         max-width: 20em;
         row-gap: 1em;
-        margin: 1em;
+        margin-bottom: 4em;
+        &:last-child {
+            margin-bottom: 0;
+        }
         &__name {
             grid-column: 1 / 3;
             grid-row: 1;
             font-weight: bold;
+            font-size: 1.3em;
         }
         &__temp {
             grid-column: 1 / 3;

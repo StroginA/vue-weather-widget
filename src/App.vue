@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import LocationCard from "./components/LocationCard.vue";
+import WidgetBody from "./components/WidgetBody.vue";
 </script>
 
 <template>
   <main>
-    <LocationCard />
+    <WidgetBody />
   </main>
 </template>
 
