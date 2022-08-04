@@ -7,7 +7,7 @@
             <div class="settings-modal__header">
                 Settings
                 <button class="settings-modal__close-btn">
-                    <fa-icon class="settings-modal__close-btn__icon"
+                    <fa-icon class="icon"
                     icon="fa-xmark" />
                 </button>
             </div>
@@ -47,7 +47,7 @@
             margin-left: auto;
             border: 0;
             background: 0;
-            &__icon {
+            & > .icon {
                 font-size: 1.5em;
             }
         }

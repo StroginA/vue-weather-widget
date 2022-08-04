@@ -6,7 +6,7 @@ import SettingsModal from "./SettingsModal.vue";
 <template>
     <div class="widget-body">
         <button class="widget-body__settings-btn">
-            <fa-icon class="widget-body__settings-btn__icon fa-spin"
+            <fa-icon class="icon fa-spin"
             icon="fa-gear" />
         </button>
         <LocationCard />
@@ -22,11 +22,10 @@ import SettingsModal from "./SettingsModal.vue";
         margin: 1em;
         &__settings-btn {
             z-index: 1;
-            &:hover > .fa-spin {
+            &:hover > .icon.fa-spin {
                 --fa-animation-duration: unset;
             }
-            &__icon {
-                font-size: 1.5em;
+            & > .icon {
                 &.fa-spin {
                     --fa-animation-duration: infinite;
                 }

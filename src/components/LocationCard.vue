@@ -7,9 +7,9 @@
             London, UK
         </h1>
         <em class="location-card__temp">
-            <img class="location-card__temp__icon"
+            <img class="icon icon_weather"
             src="http://openweathermap.org/img/wn/02d@2x.png">
-            <p class="location-card__temp__value">
+            <p>
                 7degC
             </p>
         </em>
@@ -17,45 +17,44 @@
             Feels like -3degC. Broken clouds. Light breeze.
         </p>
         <div class="location-card__misc">
-            <em class="location-card__misc__key">
-                <fa-icon class="location-card__misc__key__icon
-                location-card__misc__key__icon_wind fa-rotate-by"
+            <em class="location-card__misc_key">
+                <fa-icon class="icon icon_wind fa-rotate-by"
                 icon="fa-location-arrow" />
             </em>
-            <p class="location-card__misc__value">
+            <p>
                 3.0m/s SSE
             </p>
         </div>
         <div class="location-card__misc">
-            <em class="location-card__misc__key">
-                <fa-icon class="location-card__misc__key__icon" 
+            <em class="location-card__misc_key">
+                <fa-icon class="icon" 
                 icon="fa-gauge-simple-high" />
             </em>
-            <p class="location-card__misc__value">
+            <p>
                 1021hPa
             </p>
         </div>
         <div class="location-card__misc">
-            <em class="location-card__misc__key">
+            <em class="location-card__misc_key">
                 Humidity: 
             </em>
-            <p class="location-card__misc__value">
+            <p>
                 97%
             </p>
         </div>
         <div class="location-card__misc">
-            <em class="location-card__misc__key">
+            <em class="location-card__misc_key">
                 Dew point:  
             </em>
-            <p class="location-card__misc__value">
+            <p>
                 0degC
             </p>
         </div>
         <div class="location-card__misc">
-            <em class="location-card__misc__key">
+            <em class="location-card__misc_key">
                 Visibility: 
             </em>
-            <p class="location-card__misc__value">
+            <p>
                 10.0km
             </p>
         </div>
@@ -83,7 +82,7 @@
             grid-row: 2;
             display: flex;
             align-items: center;
-            &__value {
+            & > * {
                 height: fit-content;
                 font-size: 2.5rem;
                 font-style: normal;
@@ -98,18 +97,12 @@
         &__misc {
             display: flex;
             align-items: center;
-            &__key {
+            &_key {
                 font-style: normal;
                 font-weight: bold;
                 margin-right: 0.5em;
-                &__icon {
-                    font-size: 1.5em;
-                    &_wind {
-                        &.fa-rotate-by {
-                            --fa-rotate-angle: 0deg;
-                        }
-                    }
-                    
+                & > .icon_wind.fa-rotate-by {
+                    --fa-rotate-angle: 0deg;
                 }
             }
         }
