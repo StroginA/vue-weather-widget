@@ -3,8 +3,6 @@ import WidgetBody from "./components/WidgetBody.vue";
 </script>
 
 <template>
-  <main>
-    <WidgetBody />
-  </main>
+  <WidgetBody />
 </template>
 

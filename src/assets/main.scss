@@ -1,5 +1,17 @@
 @import "./base.css";
 
+#app {
+    background-color: inherit;
+}
 .icon {
     font-size: 1.5em;
 }
+.btn {
+    border: 0;
+    background-color: inherit;
+    &:hover {
+        filter: brightness(0.85);
+        cursor: pointer;
+    }
+}
+
