@@ -10,6 +10,6 @@ import { faGear, faLocationArrow, faXmark, faGaugeSimpleHigh,
 library.add(faGear, faLocationArrow, faXmark, faGaugeSimpleHigh, faBars, 
     faTrashCan, faArrowTurnDown);
 
-const app = createApp(App).use(createPinia).component('fa-icon', FontAwesomeIcon);
+const app = createApp(App).use(createPinia()).component('fa-icon', FontAwesomeIcon);
 
 app.mount('#app');

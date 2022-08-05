@@ -1,4 +1,22 @@
 <script setup lang="ts">
+import { useStore } from '@/stores/store.js';
+import debounce from 'lodash-es/debounce';
+const store = useStore();
+
+const handleClose = () => {
+    store.closeSettings();
+}
+
+const handleInputChange = debounce(
+        () => {
+            store.fetchLocationNames();
+        }, 500
+    );
+
+const handleSubmit = (e: MouseEvent) => {
+    e.preventDefault();
+    store.addLocation();
+}
 </script>
 
 <template>
@@ -7,7 +25,7 @@
             <h1 class="settings-modal__header">
                 Settings
             </h1>
-            <button class="btn btn_close">
+            <button class="btn btn_close" @click = handleClose>
                 <fa-icon class="icon icon_close"
                 icon="fa-xmark" />
             </button>
@@ -40,11 +58,16 @@
                     Add Location:
                 </label>
                 <input class="input submit-location__input"
-                type="text">
-                <button class="btn btn_submit">
+                type="text"
+                v-model="store.locationInputValue"
+                @input=handleInputChange>
+                <button class="btn btn_submit" @click=handleSubmit>
                     <fa-icon class="icon icon_submit"
                     icon="fa-arrow-turn-down" />
                 </button>
+                <p class="error-warning">
+                    {{store.locationInputError}}
+                </p>
             </form>
         </div>
     </div>

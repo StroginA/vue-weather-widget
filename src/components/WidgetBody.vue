@@ -1,15 +1,27 @@
 <script setup lang="ts">
 import LocationCard from "./LocationCard.vue";
 import SettingsModal from "./SettingsModal.vue";
+import { useStore } from '@/stores/store.js';
+import { onMounted } from "vue";
+const store = useStore();
+
+onMounted(() => {
+    store.initialize();
+    store.fetchWeather();
+})
+
+const handleSettingsOpen = () => {
+    store.openSettings();
+}
 </script>
 
 <template>
     <div class="widget-body">
-        <button class="btn settings-btn">
+        <button class="btn settings-btn" @click=handleSettingsOpen>
             <fa-icon class="icon fa-spin"
             icon="fa-gear" />
         </button>
-        <SettingsModal />
+        <SettingsModal v-show="store.isSettingsOpen"/>
         <LocationCard />
         <LocationCard />
     </div>
