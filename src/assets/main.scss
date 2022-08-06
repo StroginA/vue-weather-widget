@@ -1,13 +1,17 @@
 @import "./base.scss";
 
 .widget-body {
+    // We nest everything inside the main container to make sure widget CSS does not leak outside
     background-color: var(--color-background);
+    color: var(--color-text);
     .icon {
         font-size: 1.5em;
     }
     .btn {
+        // Generic button is made darker in response to hover
         border: 0;
         background-color: inherit;
+        border-radius: 10%;
         &:hover {
             filter: brightness(0.85);
             cursor: pointer;

@@ -139,6 +139,9 @@ const handleSubmit = (e: MouseEvent) => {
     }
     .submit-location {
         display: grid;
+        background-color: inherit;
+        column-gap: 0.5em;
+        grid-template-columns: 7fr 1fr;
         &__label {
             font-weight: bold;
             margin-bottom: 0.3em;
