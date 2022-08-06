@@ -44,3 +44,15 @@ npm run build
 ```sh
 npm run test:unit
 ```
+
+## Roadmap
+
+- [X] Visual design
+- [_] Data reflected on the UI
+- [X] Requests local weather when opened first
+- [X] Requests suggested location names while entering a location
+- [_] Requests weather for watched locations
+- [_] Can reorder watched locations in settings
+- [_] Packed as a widget, embeddable into an HTML page
+- [_] Tests
+- [_] Project structure prettied
