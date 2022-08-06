@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { getLocalWeather, getMatchingLocations } from './requests';
-import type { WeatherReport } from './requests'
+import { getLocalWeather, getMatchingLocations } from '../controllers/requests';
+import type { WeatherReport } from '../controllers/requests'
 
 interface LocationCoordinates {
   name: string // "London, US"

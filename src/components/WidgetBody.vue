@@ -33,21 +33,20 @@ const handleSettingsOpen = () => {
         flex-direction: column;
         max-width: 20em;
         margin: 1em;
-        background-color: inherit;
-    }
-    .settings-btn {
-        z-index: 1;
-        position: absolute;
-        right: 0;
-        &:hover {
-            filter: unset;
-            & > .icon.fa-spin {
-            --fa-animation-duration: unset;
+        .settings-btn {
+            z-index: 1;
+            position: absolute;
+            right: 0;
+            &:hover {
+                filter: unset;
+                & > .icon.fa-spin {
+                --fa-animation-duration: unset;
+                }
             }
-        }
-        & > .icon {
-            &.fa-spin {
-                --fa-animation-duration: infinite;
+            & > .icon {
+                &.fa-spin {
+                    --fa-animation-duration: infinite;
+                }
             }
         }
     }

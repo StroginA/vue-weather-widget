@@ -1,20 +1,19 @@
-@import "./base.css";
+@import "./base.scss";
 
-#app {
-    background-color: inherit;
-}
-.icon {
-    font-size: 1.5em;
-}
-.btn {
-    border: 0;
-    background-color: inherit;
-    &:hover {
-        filter: brightness(0.85);
-        cursor: pointer;
+.widget-body {
+    background-color: var(--color-background);
+    .icon {
+        font-size: 1.5em;
+    }
+    .btn {
+        border: 0;
+        background-color: inherit;
+        &:hover {
+            filter: brightness(0.85);
+            cursor: pointer;
+        }
+    }
+    .error-warning {
+        color: red;
     }
 }
-.error-warning {
-    color: red;
-}
-
