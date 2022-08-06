@@ -74,13 +74,15 @@ export const useStore = defineStore('store', {
       Request location by name from geocoding API and fetch a list of locations that match.
       Pick from list to fetch coordinate weather data.
       */
-      const data = await getMatchingLocations(this.locationInputValue, this.weatherApiKey);
-      for (let location of data) {
-        this.validLocations.push({
-          name: `${location.name}, ${location.country}`,
-          lat: location.lat,
-          lon: location.lon
-        })
+      if (this.locationInputValue) {
+        const data = await getMatchingLocations(this.locationInputValue, this.weatherApiKey);
+        for (let location of data) {
+          this.validLocations.push({
+            name: `${location.name}, ${location.country}`,
+            lat: location.lat,
+            lon: location.lon
+          })
+        }
       }
     },
     addLocation() {

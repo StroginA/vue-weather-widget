@@ -1,4 +1,4 @@
-interface LocationByName {
+export interface LocationByName {
     name: string
     country: string
     lat: number
