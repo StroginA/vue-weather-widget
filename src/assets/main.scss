@@ -4,6 +4,7 @@
     // We nest everything inside the main container to make sure widget CSS does not leak outside
     background-color: var(--color-background);
     color: var(--color-text);
+    font-size: 12px;
     .icon {
         font-size: 1.5em;
     }

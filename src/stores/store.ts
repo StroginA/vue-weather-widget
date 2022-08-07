@@ -12,7 +12,7 @@ export const useStore = defineStore('store', {
     locationInputError: "",
     validLocations: [] as LocationCoordinates[], // Locations suggested when entering a new location's name
     locationsData: [] as LocationProfile[], // A list of locations currently watched
-    formattedProfiles: [] as FormattedProfile[],
+    formattedProfiles: [] as FormattedProfile[], // Profiles ready for consumption by UI
     widgetBodyError: "",
     weatherApiKey: ""
   }),
@@ -92,6 +92,10 @@ export const useStore = defineStore('store', {
         this.locationInputError = "No location with such name found."
       }
     },
+    deleteLocation(name: string) {
+      this.locationsData = this.locationsData.filter((current)=>!(name===current.name));
+      this.formattedProfiles = this.formattedProfiles.filter((current)=>!(name===current.name));
+    },
     async fetchWeather() {
       /*
       Fetches weather for all watched locations. Mind your API call limits.
@@ -99,7 +103,12 @@ export const useStore = defineStore('store', {
       for (let location of this.locationsData) {
         const weatherInLocation = await getWeatherByCoordinates(location.lat, location.lon, this.weatherApiKey)
         this.parseWeatherToStore(location, weatherInLocation);
-        this.formattedProfiles.push(formatProfile(location));
+        const id = this.formattedProfiles.findIndex((current)=>location.name===current.name)
+        if (id!==-1) {
+          this.formattedProfiles[id] = formatProfile(location);
+        } else {
+          this.formattedProfiles.push(formatProfile(location));
+        }
       }
     }
   }

@@ -3,12 +3,10 @@ import LocationCard from "./LocationCard.vue";
 import SettingsModal from "./SettingsModal.vue";
 import { useStore } from '@/stores/store.js';
 import { onMounted } from "vue";
-import { formatProfile } from "@/controllers/formatProfile";
 const store = useStore();
 
 onMounted(() => {
     store.initialize();
-    store.fetchWeather();
 })
 
 const handleSettingsOpen = () => {
@@ -23,12 +21,12 @@ const handleSettingsOpen = () => {
             icon="fa-gear" />
         </button>
         <SettingsModal v-show="store.isSettingsOpen"/>
-        <template v-for="profile in store.formattedProfiles">
+        <template v-if="store.formattedProfiles.length!==0"
+        v-for="profile in store.formattedProfiles">
             <LocationCard v-if="profile.weather"
             :key="profile.name"
             :profile=profile />
         </template>
-        
     </div>
 </template>
 

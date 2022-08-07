@@ -7,6 +7,13 @@ const handleClose = () => {
     store.closeSettings();
 }
 
+const handleDrag = (e: DragEvent) => {
+}
+
+const handleDelete = (name: string) => {
+    store.deleteLocation(name);
+} 
+
 const handleInputChange = debounce(
         () => {
             store.fetchLocationNames();
@@ -32,6 +39,8 @@ const handleSubmit = (e: MouseEvent) => {
             <div class="reorderable-list">
                 <div v-for="location in store.locationsData"
                 :key="location.name"
+                draggable="true"
+                @dragstart="handleDrag"
                 class="reorderable-list__element">
                     <button class="btn btn_drag">
                         <fa-icon class="icon icon_bars"
@@ -40,7 +49,8 @@ const handleSubmit = (e: MouseEvent) => {
                     <p>
                         {{location.name}}
                     </p>
-                    <button class="btn btn_delete">
+                    <button class="btn btn_delete"
+                    @click="handleDelete(location.name)">
                         <fa-icon class="icon icon_delete"
                         icon="fa-trash-can" />
                     </button>
@@ -93,7 +103,7 @@ const handleSubmit = (e: MouseEvent) => {
             width: 100%;
             flex-direction: column;
             justify-content: left;
-            background-color: #FFFFFF;
+            background-color: var(--color-background);
             padding: 0.5em;
             & > .btn_close {
                 z-index: 1;
