@@ -73,7 +73,7 @@ export const useStore = defineStore('store', {
           }
           // only add to the list if not there
           if (!this.validLocations.find((current)=>{
-            current.name === toPush.name
+            return current.name === toPush.name
           })) {
             this.validLocations.push(toPush)
           }
