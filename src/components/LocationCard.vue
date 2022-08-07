@@ -102,7 +102,7 @@ const windIconDirection = props.profile.weather ?
             grid-row: 1;
             font-weight: bold;
             font-size: 1.3em;
-            max-width: 14em;
+            max-width: 12em;
             overflow-wrap: break-word;
         }
         &__temp {

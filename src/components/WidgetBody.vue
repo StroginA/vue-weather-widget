@@ -21,11 +21,12 @@ const handleSettingsOpen = () => {
             icon="fa-gear" />
         </button>
         <SettingsModal v-show="store.isSettingsOpen"/>
-        <template v-if="store.formattedProfiles.length!==0"
-        v-for="profile in store.formattedProfiles">
-            <LocationCard v-if="profile.weather"
-            :key="profile.name"
-            :profile=profile />
+        <template v-for="profile in store.locationsData">
+            <LocationCard v-if="profile.formatted"
+            :key="profile.formatted.name"
+            :profile=profile.formatted />
+            <fa-icon icon="fa-circle-notch" class="icon icon_loading fa-spin"
+            v-else />
         </template>
     </div>
 </template>
@@ -36,6 +37,7 @@ const handleSettingsOpen = () => {
         flex-direction: column;
         max-width: 20em;
         margin: 1em;
+        
         .settings-btn {
             z-index: 1;
             position: absolute;
@@ -51,6 +53,9 @@ const handleSettingsOpen = () => {
                     --fa-animation-duration: infinite;
                 }
             }
+        }
+        & > .icon_loading {
+            font-size: 10em;
         }
     }
 </style>

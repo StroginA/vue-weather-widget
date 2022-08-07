@@ -67,7 +67,7 @@ const handleSubmit = (e: MouseEvent) => {
                 @input=handleInputChange
                 list="suggestedLocations">
                 <datalist id="suggestedLocations">
-                    <option v-for="location in store.validLocations" 
+                    <option v-for="location in store.validLocations"
                     :key=location.name>
                         {{location.name}}
                     </option>
@@ -106,6 +106,7 @@ const handleSubmit = (e: MouseEvent) => {
             justify-content: left;
             background-color: var(--color-background);
             padding: 0.5em;
+            height: initial;
             & > .btn_close {
                 z-index: 1;
                 position: absolute;

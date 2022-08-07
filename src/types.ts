@@ -60,6 +60,8 @@ export interface LocationProfile {
         windDeg: number // degrees
         feelsLike: number
     }
+    isLoading?: boolean
+    formatted?: FormattedProfile
 }
 
 export interface FormattedProfile {

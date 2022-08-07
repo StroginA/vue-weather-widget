@@ -12,7 +12,6 @@ export const useStore = defineStore('store', {
     locationInputError: "",
     validLocations: [] as LocationCoordinates[], // Locations suggested when entering a new location's name
     locationsData: [] as LocationProfile[], // A list of locations currently watched
-    formattedProfiles: [] as FormattedProfile[], // Profiles ready for consumption by UI
     widgetBodyError: "",
     weatherApiKey: ""
   }),
@@ -65,13 +64,19 @@ export const useStore = defineStore('store', {
       if (this.locationInputValue) {
         const data = await getMatchingLocations(this.locationInputValue, this.weatherApiKey);
         for (let location of data) {
-          this.validLocations.push({
+          const toPush = {
             name: location.state ?
             `${location.name}, ${location.country}, ${location.state}` :
             `${location.name}, ${location.country}`,
             lat: location.lat,
             lon: location.lon
-          })
+          }
+          // only add to the list if not there
+          if (!this.validLocations.find((current)=>{
+            current.name === toPush.name
+          })) {
+            this.validLocations.push(toPush)
+          }
         }
       }
     },
@@ -83,32 +88,36 @@ export const useStore = defineStore('store', {
         return this.locationInputValue === current.name
       });
       if (location) {
-        this.locationsData.push(location);
-        this.fetchWeather();
-        this.closeSettings();
-        this.locationInputValue = "";
-        this.locationInputError = "";
+        if (this.validLocations.find((current) => {
+          return location.name === current.name
+        })) {
+          // Don't add if it's already in the list
+          this.locationInputError = "This location is already being watched."
+        } else {
+          this.locationsData.push(location);
+          this.fetchWeather();
+          this.closeSettings();
+          this.locationInputValue = "";
+          this.locationInputError = "";
+          this.validLocations = [];
+        }
       } else {
         this.locationInputError = "No location with such name found."
       }
     },
     deleteLocation(name: string) {
       this.locationsData = this.locationsData.filter((current)=>!(name===current.name));
-      this.formattedProfiles = this.formattedProfiles.filter((current)=>!(name===current.name));
     },
     async fetchWeather() {
       /*
       Fetches weather for all watched locations. Mind your API call limits.
       */
       for (let location of this.locationsData) {
+        location.isLoading = true;
         const weatherInLocation = await getWeatherByCoordinates(location.lat, location.lon, this.weatherApiKey)
         this.parseWeatherToStore(location, weatherInLocation);
-        const id = this.formattedProfiles.findIndex((current)=>location.name===current.name)
-        if (id!==-1) {
-          this.formattedProfiles[id] = formatProfile(location);
-        } else {
-          this.formattedProfiles.push(formatProfile(location));
-        }
+        location.formatted = formatProfile(location);
+        location.isLoading = false;
       }
     }
   }
