@@ -7,7 +7,8 @@ const handleClose = () => {
     store.closeSettings();
 }
 
-const handleDrag = (e: DragEvent) => {
+const handleDragStart = (e: DragEvent) => {
+    
 }
 
 const handleDelete = (name: string) => {
@@ -40,7 +41,7 @@ const handleSubmit = (e: MouseEvent) => {
                 <div v-for="location in store.locationsData"
                 :key="location.name"
                 draggable="true"
-                @dragstart="handleDrag"
+                @dragstart="handleDragStart"
                 class="reorderable-list__element">
                     <button class="btn btn_drag">
                         <fa-icon class="icon icon_bars"
