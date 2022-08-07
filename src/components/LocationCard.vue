@@ -15,7 +15,7 @@ const props = defineProps<{
         <em class="location-card__temp">
             <!-- weather conditions icon and temperature-->
             <img class="icon icon_weather"
-            src={{props.profile.imgSrc}}>
+            :src=props.profile.iconSrc>
             <p>
                 {{props.profile.temp}}
             </p>
