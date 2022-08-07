@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { useStore } from '@/stores/store.js';
 import debounce from 'lodash-es/debounce';
+import draggable from 'vuedraggable'
 const store = useStore();
+
 
 const handleClose = () => {
     store.closeSettings();
-}
-
-const handleDragStart = (e: DragEvent) => {
-    
 }
 
 const handleDelete = (name: string) => {
@@ -37,26 +35,28 @@ const handleSubmit = (e: MouseEvent) => {
                 <fa-icon class="icon icon_close"
                 icon="fa-xmark" />
             </button>
-            <div class="reorderable-list">
-                <div v-for="location in store.locationsData"
-                :key="location.name"
-                draggable="true"
-                @dragstart="handleDragStart"
-                class="reorderable-list__element">
-                    <button class="btn btn_drag">
-                        <fa-icon class="icon icon_bars"
-                        icon="fa-bars" />
-                    </button>
-                    <p>
-                        {{location.name}}
-                    </p>
-                    <button class="btn btn_delete"
-                    @click="handleDelete(location.name)">
-                        <fa-icon class="icon icon_delete"
-                        icon="fa-trash-can" />
-                    </button>
-                </div>
-            </div>
+            <draggable
+            :list="store.locationsData"
+            item-key="name"
+            handle=".btn_drag"
+            class="reorderable-list">
+                <template #item="{element}">
+                    <div class="reorderable-list__element">
+                        <button class="btn btn_drag">
+                            <fa-icon class="icon icon_bars"
+                            icon="fa-bars" />
+                        </button>
+                        <p>
+                            {{element.name}}
+                        </p>
+                        <button class="btn btn_delete"
+                        @click="handleDelete(element.name)">
+                            <fa-icon class="icon icon_delete"
+                            icon="fa-trash-can" />
+                        </button>
+                    </div>
+                </template>
+            </draggable>
             <form class="submit-location">
                 <label class="submit-location__label">
                     Add Location:

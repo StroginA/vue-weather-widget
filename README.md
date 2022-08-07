@@ -53,7 +53,7 @@ npm run test:unit
 - [X] Requests suggested location names while entering a location
 - [X] Requests weather for watched locations
 - [_] Saves and loads to localstorage
-- [_] Can reorder watched locations in settings
+- [X] Can reorder watched locations in settings
 - [_] Packed as a widget, embeddable into an HTML page
 - [_] Tests
 - [_] Project structure prettied

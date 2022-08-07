@@ -88,7 +88,7 @@ export const useStore = defineStore('store', {
         return this.locationInputValue === current.name
       });
       if (location) {
-        if (this.validLocations.find((current) => {
+        if (this.locationsData.find((current) => {
           return location.name === current.name
         })) {
           // Don't add if it's already in the list
