@@ -24,6 +24,10 @@ export const useStore = defineStore('store', {
       and adds current location into the list on success.
       */
       this.weatherApiKey = import.meta.env.VITE_WEATHER_API_KEY;
+      // load data from storage
+      const storedData = localStorage.getItem('weather-widget');
+      storedData ? this.locationsData = JSON.parse(storedData) : this.locationsData = []
+      // If launched without any locations stored, display weather for current location
       if (this.locationsData.length === 0) {
         const currentLocation = await getCurrentLocation(this.weatherApiKey);
         const location = {
@@ -36,6 +40,9 @@ export const useStore = defineStore('store', {
         this.locationsData.push(location);
       }
       this.fetchWeather();
+    },
+    saveToStorage() {
+      localStorage.setItem('weather-widget', JSON.stringify(this.locationsData));
     },
     parseWeatherToStore(location: LocationProfile, report: WeatherReport) {
       location.weather = {
@@ -96,10 +103,10 @@ export const useStore = defineStore('store', {
         } else {
           this.locationsData.push(location);
           this.fetchWeather();
-          this.closeSettings();
           this.locationInputValue = "";
           this.locationInputError = "";
           this.validLocations = [];
+          this.saveToStorage();
         }
       } else {
         this.locationInputError = "No location with such name found."
@@ -107,6 +114,7 @@ export const useStore = defineStore('store', {
     },
     deleteLocation(name: string) {
       this.locationsData = this.locationsData.filter((current)=>!(name===current.name));
+      this.saveToStorage();
     },
     async fetchWeather() {
       /*

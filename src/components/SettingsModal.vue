@@ -4,9 +4,12 @@ import debounce from 'lodash-es/debounce';
 import draggable from 'vuedraggable'
 const store = useStore();
 
-
 const handleClose = () => {
     store.closeSettings();
+}
+
+const handleDragReorder = () => {
+    store.saveToStorage();
 }
 
 const handleDelete = (name: string) => {
@@ -36,9 +39,11 @@ const handleSubmit = (e: MouseEvent) => {
                 icon="fa-xmark" />
             </button>
             <draggable
+            animation="300"
             :list="store.locationsData"
             item-key="name"
             handle=".btn_drag"
+            @change="handleDragReorder"
             class="reorderable-list">
                 <template #item="{element}">
                     <div class="reorderable-list__element">
