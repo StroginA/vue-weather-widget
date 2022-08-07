@@ -3,6 +3,7 @@ import LocationCard from "./LocationCard.vue";
 import SettingsModal from "./SettingsModal.vue";
 import { useStore } from '@/stores/store.js';
 import { onMounted } from "vue";
+import { formatProfile } from "@/controllers/formatProfile";
 const store = useStore();
 
 onMounted(() => {
@@ -22,8 +23,9 @@ const handleSettingsOpen = () => {
             icon="fa-gear" />
         </button>
         <SettingsModal v-show="store.isSettingsOpen"/>
-        <LocationCard />
-        <LocationCard />
+        <div v-for="profile in store.locationsData">
+            <LocationCard :profile=formatProfile(profile) />
+        </div>
     </div>
 </template>
 

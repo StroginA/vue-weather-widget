@@ -1,61 +1,74 @@
 <script setup lang="ts">
+import type { FormattedProfile } from '@/types';
+
+const props = defineProps<{
+    profile: FormattedProfile
+}>()
 </script>
 
 <template>
     <div class="location-card">
         <h1 class="location-card__name">
-            London, UK
+            <!-- location name and country-->
+            {{props.profile.name}}
         </h1>
         <em class="location-card__temp">
+            <!-- weather conditions icon and temperature-->
             <img class="icon icon_weather"
-            src="http://openweathermap.org/img/wn/02d@2x.png">
+            src={{props.profile.imgSrc}}>
             <p>
-                7degC
+                {{props.profile.temp}}
             </p>
         </em>
         <p class="location-card__info">
-            Feels like -3degC. Broken clouds. Light breeze.
+            <!-- feels-like and general conditions description-->
+            {{props.profile.info}}
         </p>
         <div class="location-card__misc">
+            <!-- wind speed/direction, icon rotated to match-->
             <em class="location-card__misc_key">
                 <fa-icon class="icon icon_wind fa-rotate-by"
                 icon="fa-location-arrow" />
             </em>
             <p>
-                3.0m/s SSE
+                {{props.profile.wind}}
             </p>
         </div>
         <div class="location-card__misc">
+            <!-- atmospheric pressure-->
             <em class="location-card__misc_key">
                 <fa-icon class="icon" 
                 icon="fa-gauge-simple-high" />
             </em>
             <p>
-                1021hPa
+                {{props.profile.pressure}}
             </p>
         </div>
         <div class="location-card__misc">
+            <!-- humidity-->
             <em class="location-card__misc_key">
                 Humidity: 
             </em>
             <p>
-                97%
+                {{props.profile.humidity}}
             </p>
         </div>
         <div class="location-card__misc">
+            <!-- dew point-->
             <em class="location-card__misc_key">
                 Dew point:  
             </em>
             <p>
-                0degC
+                {{props.profile.dewPoint}}
             </p>
         </div>
         <div class="location-card__misc">
+            <!-- visibility-->
             <em class="location-card__misc_key">
                 Visibility: 
             </em>
             <p>
-                10.0km
+                {{props.profile.visibility}}
             </p>
         </div>
     </div>
