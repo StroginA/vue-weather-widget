@@ -1,38 +1,4 @@
-export interface LocationByName {
-    name: string
-    country: string
-    lat: number
-    lon: number
-    additionalProperties?: { [prop: string]: string};
-}
-
-export interface WeatherReport {
-    coord: {
-        lat: number,
-        lon: number
-    }
-    weather: [
-        {
-          description: string
-          icon: string
-        }
-    ]
-    main: {
-        temp: number
-        feels_like: number
-        pressure: number
-        humidity: number
-    },
-    visibility: number
-    wind: {
-        speed: number
-        deg: number
-    }
-    sys: {
-        country: string
-    }
-    name: string
-}
+import type { LocationByName, WeatherReport } from "@/types";
 
 export async function getMatchingLocations(name: string, apiKey: string): Promise<LocationByName[]> {
     const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${name}&limit=5&appid=${apiKey}`);

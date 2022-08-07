@@ -21,6 +21,7 @@ describe('store', () => {
   })
 
   it('parses suggested locations', async () => {
+    // ugly, rework later
     const store = useStore()
     const getMatchingLocations = vi.fn().mockImplementation((name, _) => {
       const responseJson = [

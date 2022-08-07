@@ -1,27 +1,8 @@
 import { defineStore } from 'pinia';
 import { getLocalWeather, getMatchingLocations } from '../controllers/requests';
-import type { WeatherReport } from '../controllers/requests'
+import type { WeatherReport, LocationCoordinates, LocationProfile } from '../types'
 
-interface LocationCoordinates {
-  name: string // "London, US"
-  lat: number
-  lon: number
-}
 
-interface LocationProfile {
-  name: string // "London, US"
-  lat: number
-  lon: number
-  temp: number
-  description: string // "clear sky"
-  icon: string // 01d
-  visibility: number // meters
-  pressure: number // hPa
-  humidity: number // percent
-  windSpeed: number // meter/sec
-  windDeg: number // degrees
-  feelsLike: number
-}
 
 export const useStore = defineStore('store', {
   state: () => ({
