@@ -30,23 +30,16 @@ const handleSubmit = (e: MouseEvent) => {
                 icon="fa-xmark" />
             </button>
             <div class="reorderable-list">
-                <div class="reorderable-list__element">
+                <div v-for="location in store.locationsData"
+                :key="location.name"
+                class="reorderable-list__element">
                     <button class="btn btn_drag">
                         <fa-icon class="icon icon_bars"
                         icon="fa-bars" />
                     </button>
-                    <p>London, UK</p>
-                    <button class="btn btn_delete">
-                        <fa-icon class="icon icon_delete"
-                        icon="fa-trash-can" />
-                    </button>
-                </div>
-                <div class="reorderable-list__element">
-                    <button class="btn btn_drag">
-                        <fa-icon class="icon icon_bars"
-                        icon="fa-bars" />
-                    </button>
-                    <p>Moscow, RU</p>
+                    <p>
+                        {{location.name}}
+                    </p>
                     <button class="btn btn_delete">
                         <fa-icon class="icon icon_delete"
                         icon="fa-trash-can" />
@@ -60,7 +53,14 @@ const handleSubmit = (e: MouseEvent) => {
                 <input class="input submit-location__input"
                 type="text"
                 v-model="store.locationInputValue"
-                @input=handleInputChange>
+                @input=handleInputChange
+                list="suggestedLocations">
+                <datalist id="suggestedLocations">
+                    <option v-for="location in store.validLocations" 
+                    :key=location.name>
+                        {{location.name}}
+                    </option>
+                </datalist>
                 <button class="btn btn_submit" @click=handleSubmit>
                     <fa-icon class="icon icon_submit"
                     icon="fa-arrow-turn-down" />

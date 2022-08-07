@@ -1,9 +1,10 @@
-export interface LocationByName {
+export interface LocationGeoloc {
     // To be received from geolocation API
     name: string
     country: string
     lat: number
     lon: number
+    state?: string
     additionalProperties?: { [prop: string]: string};
 }
 
@@ -38,37 +39,42 @@ export interface WeatherReport {
 
 export interface LocationCoordinates {
     // Representation of watched/suggested locations
-    name: string // "London, US"
+    name: string // "London, GB"
     lat: number
     lon: number
 }
   
 export interface LocationProfile {
     // Representation of weather in a location, as written into store
-    name: string // "London, US"
+    name: string // "London, GB"
     lat: number
     lon: number
-    temp: number
-    description: string // "clear sky"
-    icon: string // 01d
-    visibility: number // meters
-    pressure: number // hPa
-    humidity: number // percent
-    windSpeed: number // meter/sec
-    windDeg: number // degrees
-    feelsLike: number
+    weather?: {
+        temp: number
+        description: string // "clear sky"
+        icon: string // 01d
+        visibility: number // meters
+        pressure: number // hPa
+        humidity: number // percent
+        windSpeed: number // meter/sec
+        windDeg: number // degrees
+        feelsLike: number
+    }
 }
 
 export interface FormattedProfile {
     // intended for direct consumption by UI
     name: string
-    iconSrc: string
-    temp: string
-    info: string
-    wind: string
-    windDeg: number // clamped to 45deg intervals
-    pressure: string
-    humidity: string
-    dewPoint: string
-    visibility: string
+    weather?: {
+        iconSrc: string
+        temp: string
+        info: string
+        wind: string
+        windDeg: number // clamped to 45deg intervals
+        pressure: string
+        humidity: string
+        dewPoint: string
+        visibility: string
+    }
+    error?: string
 }

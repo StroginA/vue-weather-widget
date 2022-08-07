@@ -23,8 +23,12 @@ const handleSettingsOpen = () => {
             icon="fa-gear" />
         </button>
         <SettingsModal v-show="store.isSettingsOpen"/>
-        <LocationCard v-for="profile in store.locationsData"
-        :profile=formatProfile(profile) />
+        <template v-for="profile in store.formattedProfiles">
+            <LocationCard v-if="profile.weather"
+            :key="profile.name"
+            :profile=profile />
+        </template>
+        
     </div>
 </template>
 

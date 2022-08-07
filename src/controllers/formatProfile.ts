@@ -55,17 +55,25 @@ const formatVisibility = (visibility: number): string => {
 }
 
 export function formatProfile(profile: LocationProfile): FormattedProfile {
-    const formattedProfile = {
+    const formattedProfile = 
+    profile.weather ?
+    {
         name: profile.name,
-        iconSrc: "http://openweathermap.org/img/wn/" + profile.icon +"@2x.png",
-        temp: `${round(profile.temp)}°C`,
-        info: formatInfoString(profile.feelsLike, profile.description, profile.windSpeed),
-        wind: formatWindString(profile.windSpeed, profile.windDeg),
-        windDeg: round(profile.windDeg - (profile.windDeg % 45)),
-        pressure: `${profile.pressure}hPa`,
-        humidity: `${profile.humidity}%`,
-        dewPoint: `${calculateDewPoint(profile.temp, profile.humidity)}°C`,
-        visibility: formatVisibility(profile.visibility)
+        weather: {
+            iconSrc: `http://openweathermap.org/img/wn/${profile.weather.icon}@2x.png`,
+            temp: `${round(profile.weather.temp)}°C`,
+            info: formatInfoString(profile.weather.feelsLike, profile.weather.description, profile.weather.windSpeed),
+            wind: formatWindString(profile.weather.windSpeed, profile.weather.windDeg),
+            windDeg: round(profile.weather.windDeg - (profile.weather.windDeg % 45)),
+            pressure: `${profile.weather.pressure}hPa`,
+            humidity: `${profile.weather.humidity}%`,
+            dewPoint: `${calculateDewPoint(profile.weather.temp, profile.weather.humidity)}°C`,
+            visibility: formatVisibility(profile.weather.visibility)
+        }
+    } :
+    {
+        name: profile.name,
+        error: `Could not find weather data for this location`
     }
     return formattedProfile
 }

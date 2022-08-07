@@ -1,6 +1,7 @@
+import { formatProfile } from '@/controllers/formatProfile';
 import { defineStore } from 'pinia';
-import { getLocalWeather, getMatchingLocations } from '../controllers/requests';
-import type { WeatherReport, LocationCoordinates, LocationProfile } from '../types'
+import { getCurrentLocation, getWeatherByCoordinates, getMatchingLocations } from '../controllers/requests';
+import type { WeatherReport, LocationCoordinates, LocationProfile, FormattedProfile } from '../types'
 
 
 
@@ -9,9 +10,9 @@ export const useStore = defineStore('store', {
     isSettingsOpen: false,
     locationInputValue: "",
     locationInputError: "",
-    validLocations: [] as LocationCoordinates[],
-    locationsWatched: [] as LocationCoordinates[],
-    locationsData: [] as LocationProfile[],
+    validLocations: [] as LocationCoordinates[], // Locations suggested when entering a new location's name
+    locationsData: [] as LocationProfile[], // A list of locations currently watched
+    formattedProfiles: [] as FormattedProfile[],
     widgetBodyError: "",
     weatherApiKey: ""
   }),
@@ -24,15 +25,21 @@ export const useStore = defineStore('store', {
       and adds current location into the list on success.
       */
       this.weatherApiKey = import.meta.env.VITE_WEATHER_API_KEY;
-      const localWeather = await getLocalWeather(this.weatherApiKey);
-      this.parseWeatherToStore(localWeather);
-      console.log(this.locationsData)
+      if (this.locationsData.length === 0) {
+        const currentLocation = await getCurrentLocation(this.weatherApiKey);
+        const location = {
+          name: currentLocation.state ?
+          `${currentLocation.name}, ${currentLocation.country}, ${currentLocation.state}` :
+          `${currentLocation.name}, ${currentLocation.country}`,
+          lat: currentLocation.lat,
+          lon: currentLocation.lon
+        }
+        this.locationsData.push(location);
+      }
+      this.fetchWeather();
     },
-    parseWeatherToStore(report: WeatherReport) {
-      this.locationsData.push({
-        name: `${report.name}, ${report.sys.country}`,
-        lat: report.coord.lat,
-        lon: report.coord.lon,
+    parseWeatherToStore(location: LocationProfile, report: WeatherReport) {
+      location.weather = {
         temp: report.main.temp,
         description: report.weather[0].description,
         icon: report.weather[0].icon,
@@ -42,7 +49,7 @@ export const useStore = defineStore('store', {
         feelsLike: report.main.feels_like,
         windDeg: report.wind.deg,
         windSpeed: report.wind.speed
-      })
+      }
     },
     openSettings() {
       this.isSettingsOpen = true;
@@ -59,7 +66,9 @@ export const useStore = defineStore('store', {
         const data = await getMatchingLocations(this.locationInputValue, this.weatherApiKey);
         for (let location of data) {
           this.validLocations.push({
-            name: `${location.name}, ${location.country}`,
+            name: location.state ?
+            `${location.name}, ${location.country}, ${location.state}` :
+            `${location.name}, ${location.country}`,
             lat: location.lat,
             lon: location.lon
           })
@@ -68,13 +77,13 @@ export const useStore = defineStore('store', {
     },
     addLocation() {
       /*
-      Entered location name must match with a coordinate pair
+      Entered location name must match with one of valid locations queried earlier
       */
-      const validLocations = this.validLocations.filter((location) => {
-        return location.name === this.locationInputValue
+      const location = this.validLocations.find((current) => {
+        return this.locationInputValue === current.name
       });
-      if (validLocations[0]) {
-        this.locationsWatched.push(validLocations[0]);
+      if (location) {
+        this.locationsData.push(location);
         this.fetchWeather();
         this.closeSettings();
         this.locationInputValue = "";
@@ -83,10 +92,15 @@ export const useStore = defineStore('store', {
         this.locationInputError = "No location with such name found."
       }
     },
-    fetchWeather() {
+    async fetchWeather() {
       /*
       Fetches weather for all watched locations. Mind your API call limits.
       */
+      for (let location of this.locationsData) {
+        const weatherInLocation = await getWeatherByCoordinates(location.lat, location.lon, this.weatherApiKey)
+        this.parseWeatherToStore(location, weatherInLocation);
+        this.formattedProfiles.push(formatProfile(location));
+      }
     }
   }
 })
