@@ -4,6 +4,11 @@ import type { FormattedProfile } from '@/types';
 const props = defineProps<{
     profile: FormattedProfile
 }>()
+
+// Icon is pointing to 45deg by default. Assuming meteorological wind direction in input.
+const windIconDirection = `${(props.profile.windDeg + 180 - 45) % 360}deg`;
+
+console.log(windIconDirection);
 </script>
 
 <template>
@@ -115,7 +120,7 @@ const props = defineProps<{
                 font-weight: bold;
                 margin-right: 0.5em;
                 & > .icon_wind.fa-rotate-by {
-                    --fa-rotate-angle: 0deg;
+                    --fa-rotate-angle: v-bind(windIconDirection);
                 }
             }
         }
