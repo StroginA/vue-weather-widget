@@ -24,7 +24,8 @@ const handleSubmit = () => {
 
 <template>
     <div class="widget-body">
-        <button class="btn btn_settings" @click=handleSettingsOpen>
+        <button v-if="store.weatherApiKey"
+        class="btn btn_settings" @click=handleSettingsOpen>
             <FontAwesomeIcon class="icon icon_settings"
             icon="fa-gear"/>
         </button>
