@@ -14,6 +14,10 @@ export default defineConfig({
     },
     outDir: 'lib'
   },
+  define: {
+    'process.platform': null,
+    'process.version': null,
+  },
   plugins: [vue()],
   resolve: {
     alias: {
