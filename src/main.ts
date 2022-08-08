@@ -1,15 +1,11 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import App from './App.vue';
-import './assets/main.scss';
+import { defineCustomElement } from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faGear, faLocationArrow, faXmark, faGaugeSimpleHigh, 
     faBars, faArrowTurnDown, faTrashCan, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import WidgetBody from './components/WidgetBody.ce.vue';
 
 library.add(faGear, faLocationArrow, faXmark, faGaugeSimpleHigh, faBars, 
     faTrashCan, faArrowTurnDown, faCircleNotch);
 
-const app = createApp(App).use(createPinia()).component('fa-icon', FontAwesomeIcon);
-
-app.mount('#app');
+const WeatherWidget = defineCustomElement(WidgetBody);
+customElements.define('weather-widget', WeatherWidget);

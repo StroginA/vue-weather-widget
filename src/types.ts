@@ -73,6 +73,7 @@ export interface FormattedProfile {
         info: string
         wind: string
         windDeg: number // clamped to 45deg intervals
+        windIconDirection: string // for use in css rule
         pressure: string
         humidity: string
         dewPoint: string

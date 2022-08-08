@@ -1,8 +1,7 @@
 import { formatProfile } from '@/controllers/formatProfile';
 import { defineStore } from 'pinia';
 import { getCurrentLocation, getWeatherByCoordinates, getMatchingLocations } from '../controllers/requests';
-import type { WeatherReport, LocationCoordinates, LocationProfile, FormattedProfile } from '../types'
-
+import type { WeatherReport, LocationCoordinates, LocationProfile } from '../types'
 
 
 export const useStore = defineStore('store', {
@@ -13,7 +12,8 @@ export const useStore = defineStore('store', {
     validLocations: [] as LocationCoordinates[], // Locations suggested when entering a new location's name
     locationsData: [] as LocationProfile[], // A list of locations currently watched
     widgetBodyError: "",
-    weatherApiKey: ""
+    weatherApiKey: "",
+    weatherApiInput: ""
   }),
   getters: {
   },
@@ -23,10 +23,15 @@ export const useStore = defineStore('store', {
       If no local storage found or cities are empty, requests current coordinates from geolocation 
       and adds current location into the list on success.
       */
-      this.weatherApiKey = import.meta.env.VITE_WEATHER_API_KEY;
       // load data from storage
       const storedData = localStorage.getItem('weather-widget');
-      storedData ? this.locationsData = JSON.parse(storedData) : this.locationsData = []
+      if (storedData) {
+        this.locationsData = JSON.parse(storedData).locations;
+        this.weatherApiKey = JSON.parse(storedData).apiKey;
+        this.getLocalWeather();
+      }
+    },
+    async getLocalWeather() {
       // If launched without any locations stored, display weather for current location
       if (this.locationsData.length === 0) {
         const currentLocation = await getCurrentLocation(this.weatherApiKey);
@@ -41,8 +46,13 @@ export const useStore = defineStore('store', {
       }
       this.fetchWeather();
     },
+    submitApiKey() {
+      this.weatherApiKey = this.weatherApiInput;
+      this.saveToStorage();
+      this.getLocalWeather();
+    },
     saveToStorage() {
-      localStorage.setItem('weather-widget', JSON.stringify(this.locationsData));
+      localStorage.setItem('weather-widget', JSON.stringify({apiKey: this.weatherApiKey, locations: this.locationsData}));
     },
     parseWeatherToStore(location: LocationProfile, report: WeatherReport) {
       location.weather = {
