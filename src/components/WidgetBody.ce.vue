@@ -16,6 +16,10 @@ onMounted(() => {
 const handleSettingsOpen = () => {
     store.openSettings();
 }
+
+const handleSubmit = () => {
+    store.submitApiKey();
+}
 </script>
 
 <template>
@@ -33,6 +37,20 @@ const handleSettingsOpen = () => {
             <FontAwesomeIcon icon="fa-circle-notch" class="icon icon_loading"
             v-else />
         </template>
+        <form class="submit-api"
+        v-if="!store.weatherApiKey">
+            <label class="submit-api__label">
+                Enter your OpenWeather API key:
+            </label>
+            <input class="input submit-api__input"
+                type="text"
+                v-model="store.weatherApiInput"
+                list="suggestedLocations">
+            <button class="btn btn_submit" @click=handleSubmit>
+                    <FontAwesomeIcon class="icon icon_submit"
+                    icon="fa-arrow-turn-down" />
+            </button>
+        </form>
     </div>
 </template>
 
@@ -82,6 +100,23 @@ const handleSettingsOpen = () => {
 
         to {
             transform: rotate(360deg);
+        }
+    }
+}
+
+@mixin simple-form {
+    &__label {
+        font-weight: bold;
+        margin-bottom: 0.3em;
+    }
+    &__input {
+        grid-column: 1;
+        padding: 0.3em;
+    }
+    & > .btn_submit {
+        grid-column: 2;
+        & > .icon_submit {
+            width: 1em;
         }
     }
 }
@@ -232,26 +267,18 @@ const handleSettingsOpen = () => {
     }
 }
 
-.submit-location {
+.submit-location, .submit-api {
     display: grid;
     background-color: inherit;
     column-gap: 0.5em;
     grid-template-columns: 7fr 1fr;
-    &__label {
-        font-weight: bold;
-        margin-bottom: 0.3em;
-    }
-    &__input {
-        grid-column: 1;
-        padding: 0.3em;
-    }
-    & > .btn_submit {
-        grid-column: 2;
-        & > .icon_submit {
-            width: 1em;
-        }
-    }
+    @include simple-form
 }
+
+.submit-api {
+    margin-top: 5em;
+}
+
 
 .icon_submit {
     rotate: 90deg;

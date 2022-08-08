@@ -7,10 +7,11 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'main.ts'),
+      entry: resolve(__dirname, 'src/main.ts'),
       name: 'WeatherWidget',
-      fileName: format => `main.${format}.js`
-    }
+      fileName: 'weather-widget'
+    },
+    outDir: 'lib'
   },
   plugins: [vue()],
   resolve: {
