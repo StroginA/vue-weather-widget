@@ -20,3 +20,4 @@ You will need an API key from OpenWeatherMap.org.
 - [X] Saves and loads to localstorage
 - [X] Can reorder watched locations in settings
 - [X] Packed as a widget, embeddable into an HTML page
+- [X] Some tests
