@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import type { FormattedProfile } from '@/types';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const props = defineProps<{
     profile: FormattedProfile
 }>()
-
-// Assuming icon is pointing to 45deg by default and wind direction is given in meteorological.
-const windIconDirection = props.profile.weather ? 
-`${(props.profile.weather.windDeg + 180 - 45) % 360}deg` : 
-`0`;
-
+const windDir = props.profile.weather ?
+`${(props.profile.weather.windDeg + 180 - 45) % 360}deg` : '0';
 </script>
 
 <template>
@@ -34,7 +31,8 @@ const windIconDirection = props.profile.weather ?
             <div class="location-card__misc">
                 <!-- wind speed/direction, icon rotated to match-->
                 <em class="location-card__misc_key">
-                    <fa-icon class="icon icon_wind fa-rotate-by"
+                    <FontAwesomeIcon class="icon icon_wind"
+                    :style="{rotate: props.profile.weather.windIconDirection}"
                     icon="fa-location-arrow" />
                 </em>
                 <p>
@@ -44,7 +42,7 @@ const windIconDirection = props.profile.weather ?
             <div class="location-card__misc">
                 <!-- atmospheric pressure-->
                 <em class="location-card__misc_key">
-                    <fa-icon class="icon" 
+                    <FontAwesomeIcon class="icon icon_pressure" 
                     icon="fa-gauge-simple-high" />
                 </em>
                 <p>
@@ -87,52 +85,3 @@ const windIconDirection = props.profile.weather ?
     </div>
 </template>
 
-<style scoped lang="scss">
-    .location-card {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 20em;
-        row-gap: 1em;
-        margin-bottom: 4em;
-        &:last-child {
-            margin-bottom: 0;
-        }
-        &__name {
-            grid-column: 1 / 3;
-            grid-row: 1;
-            font-weight: bold;
-            font-size: 1.3em;
-            max-width: 12em;
-            overflow-wrap: break-word;
-        }
-        &__temp {
-            grid-column: 1 / 3;
-            grid-row: 2;
-            display: flex;
-            align-items: center;
-            & > * {
-                height: fit-content;
-                font-size: 2.5rem;
-                font-style: normal;
-                font-weight: 600;
-            }
-        }
-        &__info {
-            grid-column: 1 / 3;
-            grid-row: 3; 
-            overflow-wrap: break-word;
-        }
-        &__misc {
-            display: flex;
-            align-items: center;
-            &_key {
-                font-style: normal;
-                font-weight: bold;
-                margin-right: 0.5em;
-                & > .icon_wind.fa-rotate-by {
-                    --fa-rotate-angle: v-bind(windIconDirection);
-                }
-            }
-        }
-    }
-</style>

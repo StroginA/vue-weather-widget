@@ -2,6 +2,8 @@
 import { useStore } from '@/stores/store.js';
 import debounce from 'lodash-es/debounce';
 import draggable from 'vuedraggable'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 const store = useStore();
 
 const handleClose = () => {
@@ -35,7 +37,7 @@ const handleSubmit = (e: MouseEvent) => {
                 Settings
             </h1>
             <button class="btn btn_close" @click = handleClose>
-                <fa-icon class="icon icon_close"
+                <FontAwesomeIcon class="icon icon_close"
                 icon="fa-xmark" />
             </button>
             <draggable
@@ -48,7 +50,7 @@ const handleSubmit = (e: MouseEvent) => {
                 <template #item="{element}">
                     <div class="reorderable-list__element">
                         <button class="btn btn_drag">
-                            <fa-icon class="icon icon_bars"
+                            <FontAwesomeIcon class="icon icon_bars"
                             icon="fa-bars" />
                         </button>
                         <p>
@@ -56,7 +58,7 @@ const handleSubmit = (e: MouseEvent) => {
                         </p>
                         <button class="btn btn_delete"
                         @click="handleDelete(element.name)">
-                            <fa-icon class="icon icon_delete"
+                            <FontAwesomeIcon class="icon icon_delete"
                             icon="fa-trash-can" />
                         </button>
                     </div>
@@ -78,7 +80,7 @@ const handleSubmit = (e: MouseEvent) => {
                     </option>
                 </datalist>
                 <button class="btn btn_submit" @click=handleSubmit>
-                    <fa-icon class="icon icon_submit"
+                    <FontAwesomeIcon class="icon icon_submit"
                     icon="fa-arrow-turn-down" />
                 </button>
                 <p class="error-warning">
@@ -88,90 +90,3 @@ const handleSubmit = (e: MouseEvent) => {
         </div>
     </div>
 </template>
-
-<style scoped lang="scss">
-
-
-    .settings-modal {
-        &__backdrop {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: start;
-            z-index: 1;
-        }
-        &__body {
-            display: flex;
-            width: 100%;
-            flex-direction: column;
-            justify-content: left;
-            background-color: var(--color-background);
-            padding: 0.5em;
-            height: initial;
-            & > .btn_close {
-                z-index: 1;
-                position: absolute;
-                right: 0;
-            }
-        }
-        &__header {
-            font-weight: bold;
-            font-weight: bold;
-            font-size: 1.3em;
-        }
-    }
-    .reorderable-list {
-        display: flex;
-        flex-direction: column;
-        background-color: inherit;
-        margin-bottom: 2em;
-        &__element {
-            display: flex;
-            background-color: inherit;
-            filter: brightness(0.85);
-            margin: 1em 0;
-            padding: 0.7em 0.5em;
-            align-items: center;
-            & > .btn_drag {
-                margin-right: 0.5em;
-                &:hover {
-                    filter: unset;
-                    cursor: move;
-                }
-            }
-            &:hover {
-                filter: brightness(0.60);
-            }
-            & > .btn_delete {
-                margin-left: auto;
-                &:hover {
-                    filter: unset;
-                }
-            }
-        }
-    }
-    .submit-location {
-        display: grid;
-        background-color: inherit;
-        column-gap: 0.5em;
-        grid-template-columns: 7fr 1fr;
-        &__label {
-            font-weight: bold;
-            margin-bottom: 0.3em;
-        }
-        &__input {
-            grid-column: 1;
-            padding: 0.3em;
-        }
-        & > .btn_submit {
-            grid-column: 2;
-        }
-    }
-    .icon_submit {
-        rotate: 90deg;
-    }
-</style>

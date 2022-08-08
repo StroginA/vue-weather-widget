@@ -16,6 +16,11 @@ const formatWindString = (speed: number, deg: number): string => {
     );
 }
 
+const formatWindIconDirection = (windDeg: number):string => {
+    // Assuming icon is pointing to 45deg by default and wind direction is given in meteorological.
+    return `${(windDeg + 180 - 45) % 360}deg`
+}
+
 const calculateDewPoint = (temp: number, humidity: number): number => {
     // For Celsius
     return round((temp - ((100-humidity)/5)))
@@ -65,6 +70,7 @@ export function formatProfile(profile: LocationProfile): FormattedProfile {
             info: formatInfoString(profile.weather.feelsLike, profile.weather.description, profile.weather.windSpeed),
             wind: formatWindString(profile.weather.windSpeed, profile.weather.windDeg),
             windDeg: round(profile.weather.windDeg - (profile.weather.windDeg % 45)),
+            windIconDirection: formatWindIconDirection(round(profile.weather.windDeg - (profile.weather.windDeg % 45))),
             pressure: `${profile.weather.pressure}hPa`,
             humidity: `${profile.weather.humidity}%`,
             dewPoint: `${calculateDewPoint(profile.weather.temp, profile.weather.humidity)}°C`,
