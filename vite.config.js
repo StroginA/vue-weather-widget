@@ -17,7 +17,8 @@ export default defineConfig({
   define: {
     'process.platform': null,
     'process.version': null,
-    'process.env': null
+    'process.env': null,
+    'process': null
   },
   plugins: [vue()],
   resolve: {
